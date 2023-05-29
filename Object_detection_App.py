@@ -1,7 +1,7 @@
 import streamlit as st
 import torch
 from PIL import Image
-
+import cv2
 @st.cache_resource
 def load_model():
     model = torch.hub.load('ultralytics/yolov5', 'yolov5l', pretrained=True)
