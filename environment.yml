@@ -1,0 +1,11 @@
+name: my_env
+channels:
+  - defaults
+dependencies:
+  - numpy
+  - pandas
+  - scikit-learn
+  - streamlit
+  - torch
+  - pillow
+  - opencv-python
