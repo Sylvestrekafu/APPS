@@ -4,6 +4,7 @@ channels:
   - defaults
 
 dependencies:
+  - pip
   - numpy
   - pandas
   - scikit-learn
