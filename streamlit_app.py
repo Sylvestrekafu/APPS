@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 delimiters = {'Virgule (,)': ',', 'Point-virgule (;)': ';', 'Tabulation (\\t)': '\t', 'Espace ( )': ' '}
 
 # Titre de l'application
-st.title("Mon application complexe")
+st.title("Mon application de visualisation ")
 
 # Sidebar
 st.sidebar.header("Paramètres")
