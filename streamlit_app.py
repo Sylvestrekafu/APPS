@@ -5,8 +5,11 @@ import matplotlib.pyplot as plt
 # Définition des options de délimiteurs
 delimiters = {'Virgule (,)': ',', 'Point-virgule (;)': ';', 'Tabulation (\\t)': '\t', 'Espace ( )': ' '}
 
+# Configuration pour désactiver l'avertissement showPyplotGlobalUse
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 # Titre de l'application
-st.title("Mon application de visualisation ")
+st.title("Mon application de visualisation")
 
 # Sidebar
 st.sidebar.header("Paramètres")
@@ -43,31 +46,29 @@ if uploaded_files:
     dataframes = [pd.read_csv(file, delimiter=delimiters[delimiter_option]) for file in uploaded_files]
     data = pd.concat(dataframes)
     st.write(data)
+
+    # Options pour le tracé du graphique
+    st.subheader("Options de tracé du graphique")
+    x_axis = st.selectbox("Choisissez la colonne pour l'axe x", data.columns)
+    y_axis = st.selectbox("Choisissez la colonne pour l'axe y", data.columns)
+    plot_type = st.selectbox("Choisissez le type de graphique",
+                             ("Scatter Plot", "Line Plot", "Bar Plot", "Histogram", "Area Plot", "Pie Chart"))
+    color = st.color_picker("Choisissez une couleur")
+
     if st.button("Tracer le graphique"):
-        # Choix des colonnes pour les axes x et y
-        x_axis = st.selectbox("Choisissez la colonne pour l'axe x", data.columns)
-        y_axis = st.selectbox("Choisissez la colonne pour l'axe y", data.columns)
-
-        # Choix du type de graphique
-        plot_type = st.selectbox("Choisissez le type de graphique",
-                                 ("Scatter Plot", "Line Plot", "Bar Plot", "Histogram", "Area Plot", "Pie Chart"))
-
-        # Choix de la couleur
-        color = st.color_picker("Choisissez une couleur")
-
-        plt.figure(figsize=(12, 6))
-
+        fig, ax = plt.subplots(figsize=(12, 6))
         if plot_type == "Scatter Plot":
-            plt.scatter(data[x_axis], data[y_axis], color=color)
+            ax.scatter(data[x_axis], data[y_axis], color=color)
         elif plot_type == "Line Plot":
-            plt.plot(data[x_axis], data[y_axis], color=color)
+            ax.plot(data[x_axis], data[y_axis], color=color)
         elif plot_type == "Bar Plot":
-            plt.bar(data[x_axis], data[y_axis], color=color)
+            ax.bar(data[x_axis], data[y_axis], color=color)
 
-        plt.xlabel(x_axis)
-        plt.ylabel(y_axis)
-        plt.title(plot_type)
-        st.pyplot()
+        ax.set_xlabel(x_axis)
+        ax.set_ylabel(y_axis)
+        ax.set_title(f"{plot_type} de {y_axis} basé sur {x_axis}")
+
+        st.pyplot(fig)
 
 # Section 4 de l'application
 st.header("Section 4")
