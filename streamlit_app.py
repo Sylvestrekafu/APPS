@@ -47,4 +47,4 @@ if video_url:
 
 # Footer
 st.markdown("---")
-st.write("Merci d'utiliser notre application complexe !")
+st.write("Merci d'utiliser notre application  !")
