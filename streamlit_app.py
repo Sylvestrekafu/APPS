@@ -1,15 +1,7 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Définition des options de délimiteurs
-delimiters = {'Virgule (,)': ',', 'Point-virgule (;)': ';', 'Tabulation (\\t)': '\t', 'Espace ( )': ' '}
-
-# Configuration pour désactiver l'avertissement showPyplotGlobalUse
-st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Titre de l'application
-st.title("Mon application de visualisation")
+st.title("Mon application de visualisatiion")
 
 # Sidebar
 st.sidebar.header("Paramètres")
@@ -40,35 +32,11 @@ st.write("Texte en majuscules :", processed_text)
 # Section 3 de l'application
 st.header("Section 3")
 st.subheader("Téléchargement de fichiers")
-uploaded_files = st.file_uploader("Télécharger plusieurs fichiers", accept_multiple_files=True, type=["csv"])
-if uploaded_files:
-    delimiter_option = st.selectbox("Choisissez le délimiteur", list(delimiters.keys()))
-    dataframes = [pd.read_csv(file, delimiter=delimiters[delimiter_option]) for file in uploaded_files]
-    data = pd.concat(dataframes)
+uploaded_file = st.file_uploader("Télécharger un fichier", type=["csv", "txt"])
+if uploaded_file is not None:
+    data = uploaded_file.read()
+    st.write("Contenu du fichier :")
     st.write(data)
-
-    # Options pour le tracé du graphique
-    st.subheader("Options de tracé du graphique")
-    x_axis = st.selectbox("Choisissez la colonne pour l'axe x", data.columns)
-    y_axis = st.selectbox("Choisissez la colonne pour l'axe y", data.columns)
-    plot_type = st.selectbox("Choisissez le type de graphique",
-                             ("Scatter Plot", "Line Plot", "Bar Plot", "Histogram", "Area Plot", "Pie Chart"))
-    color = st.color_picker("Choisissez une couleur")
-
-    if st.button("Tracer le graphique"):
-        fig, ax = plt.subplots(figsize=(12, 6))
-        if plot_type == "Scatter Plot":
-            ax.scatter(data[x_axis], data[y_axis], color=color)
-        elif plot_type == "Line Plot":
-            ax.plot(data[x_axis], data[y_axis], color=color)
-        elif plot_type == "Bar Plot":
-            ax.bar(data[x_axis], data[y_axis], color=color)
-
-        ax.set_xlabel(x_axis)
-        ax.set_ylabel(y_axis)
-        ax.set_title(f"{plot_type} de {y_axis} basé sur {x_axis}")
-
-        st.pyplot(fig)
 
 # Section 4 de l'application
 st.header("Section 4")
@@ -79,4 +47,4 @@ if video_url:
 
 # Footer
 st.markdown("---")
-st.write("Merci d'utiliser notre application !")
+st.write("Merci d'utiliser notre application ")
